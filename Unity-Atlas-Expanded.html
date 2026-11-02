@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d12">
+<title>Unity Atlas — Unity code patterns and documentation</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--surface:#11151d;--surface2:#171c26;--line:#282e3c;--text:#f2f3f7;--muted:#99a2b4;--accent:#a7ffce;--accent2:#7ac5ff;--yellow:#ffe0a0}*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;margin:0}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.shell{max-width:1460px;margin:auto;padding:0 30px}.top{height:79px;border-bottom:1px solid #232733;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-size:19px;font-weight:800;letter-spacing:-.8px}.brand-mark{width:37px;height:37px;border-radius:12px;background:var(--accent);color:#0b0d12;display:grid;place-items:center;font-weight:1000;font-size:23px;box-shadow:0 0 25px #a7ffce20}.brand span span{color:var(--accent)}.topright{display:flex;align-items:center;gap:14px}.version{color:#8e98ac;font-size:12px;border:1px solid var(--line);border-radius:30px;padding:6px 12px}.toplink{font-size:13px;color:#bec7d6}.toplink:hover{color:var(--accent)}.hero{padding:65px 0 30px;max-width:980px}.eyebrow{font-weight:800;font-size:11px;letter-spacing:2.3px;color:var(--accent);text-transform:uppercase;display:flex;align-items:center;gap:10px}.eyebrow:before{content:'';background:var(--accent);width:7px;height:7px;border-radius:50%;box-shadow:0 0 15px var(--accent)}h1{font-size:clamp(38px,5vw,72px);line-height:1.07;letter-spacing:-3px;margin:18px 0 15px;font-weight:850}h1 em{font-style:normal;color:var(--accent)}.intro{font-size:17px;max-width:650px;color:#a7afc0;margin:0 0 30px}.search-wrap{position:relative;max-width:900px}.search{width:100%;height:68px;padding:0 133px 0 57px;background:#171c26;border:1px solid #353f4e;border-radius:14px;color:#fff;outline:none;font-size:18px;transition:.2s}.search:focus{border-color:#92e9bc;box-shadow:0 0 0 4px #a7ffce13}.search::placeholder{color:#7e899e}.mag{position:absolute;top:22px;left:21px;color:#9eabbc}.key{position:absolute;right:18px;top:19px;border:1px solid #394152;background:#212836;color:#aeb9c9;border-radius:6px;padding:2px 9px;font-size:12px}.suggest{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:18px;color:#8f9aac;font-size:13px}.pill{border:1px solid #2e3542;background:#171b24;color:#c5ccd8;padding:7px 13px;border-radius:30px;font-size:12px;transition:.15s}.pill:hover,.pill.active{border-color:var(--accent);color:var(--accent);background:#a7ffce10}.layout{display:grid;grid-template-columns:228px minmax(0,1fr);gap:35px;margin-top:38px;padding-bottom:75px}.sidebar{align-self:start;position:sticky;top:25px}.aside-title{font-size:11px;font-weight:800;letter-spacing:1.3px;color:#687589;text-transform:uppercase;margin-bottom:14px}.navitem{border:0;background:transparent;display:flex;width:100%;text-align:left;align-items:center;justify-content:space-between;padding:12px 13px;border-radius:8px;color:#aab5c6;font-size:14px}.navitem:hover{background:#171c25;color:white}.navitem.selected{color:var(--accent);background:#a7ffce10}.navcount{font-size:12px;color:#738094}.aside-foot{margin-top:32px;padding:18px;border:1px solid var(--line);background:#121620;border-radius:12px}.aside-foot strong{font-size:13px}.aside-foot p{font-size:12px;color:#8e99ac;line-height:1.7}.aside-foot a{color:var(--accent);font-size:12px;font-weight:700}.results-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.results-head h2{font-size:20px;letter-spacing:-.5px;margin:0}.results-head small{color:#7f8ba0;font-size:13px}.sort{background:#141922;border:1px solid var(--line);color:#b3bfd0;padding:9px 12px;border-radius:8px;max-width:145px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:23px;border-radius:13px;background:var(--surface);border:1px solid #282e3c;min-width:0;display:flex;flex-direction:column;transition:transform .16s,border-color .16s}.card:hover{border-color:#597a72;transform:translateY(-2px)}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:16px}.category{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#a5b6c8;font-weight:800}.category .dot{display:inline-block;background:#8ddbbb;width:7px;height:7px;border-radius:50%;margin-right:8px}.star{border:0;background:transparent;color:#7e8798;font-size:23px;line-height:1}.star.saved{color:var(--yellow)}.card h3{font-size:19px;letter-spacing:-.5px;margin:0 0 7px;overflow-wrap:anywhere}.card p{color:#a3adbd;font-size:13px;min-height:43px;margin:0 0 19px}.codepreview{background:#0b0f16;border:1px solid #222936;border-radius:9px;margin:auto 0 17px;padding:14px;color:#c1d2eb;font:12px/1.65 'SFMono-Regular',Consolas,monospace;overflow:hidden;white-space:pre;height:101px;mask-image:linear-gradient(#000 70%,transparent)}.cardbottom{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{font-size:11px;color:#76869a;border:1px solid #293040;border-radius:5px;padding:4px 7px}.view{background:transparent;color:var(--accent);font-weight:750;font-size:12px;border:0}.view:hover{text-decoration:underline}.empty{padding:60px 25px;border:1px dashed #414956;text-align:center;border-radius:14px;background:#121620;grid-column:1/-1}.empty h3{margin:5px 0}.empty p{color:var(--muted)}.empty button,.primary{background:var(--accent);border:0;color:#082318;font-weight:800;padding:10px 17px;border-radius:9px}.footer{border-top:1px solid #262d3a;padding:25px 0 35px;display:flex;justify-content:space-between;gap:16px;color:#768398;font-size:12px}.footer a{color:#a3eec5}dialog{color:var(--text);background:#141923;border:1px solid #39404f;border-radius:16px;width:min(900px,calc(100% - 26px));max-height:88vh;padding:0;box-shadow:0 32px 130px #000b}dialog::backdrop{background:#02050bd9;backdrop-filter:blur(5px)}.modalhead{position:sticky;top:0;display:flex;align-items:start;justify-content:space-between;gap:15px;background:#141923;border-bottom:1px solid #293140;padding:25px 28px 20px;z-index:1}.modalhead h2{margin:4px 0;font-size:25px;letter-spacing:-.6px}.close{border:1px solid #333c4b;background:#202735;color:#cfdae8;width:35px;height:35px;border-radius:9px;font-size:21px}.modalbody{padding:25px 28px 30px;overflow:auto}.modalbody p{color:#bac3d1;margin-top:0}.codebar{display:flex;justify-content:space-between;align-items:center;background:#1c2530;border:1px solid #30394a;border-radius:11px 11px 0 0;padding:10px 15px;font-size:11px;color:#9cacbf;letter-spacing:.3px}.copy{border:1px solid #414b5b;background:#273141;color:#d8e7f2;padding:6px 12px;border-radius:7px;font-size:12px}.copy:hover{border-color:var(--accent)}pre.fullcode{margin:0 0 24px;border:1px solid #30394a;border-top:0;background:#090d14;max-height:440px;overflow:auto;padding:22px 20px;border-radius:0 0 11px 11px;color:#c5d8f3;font:13px/1.7 'SFMono-Regular',Consolas,monospace;tab-size:4}.explain{background:#1a222c;border-left:3px solid var(--accent);padding:16px 19px;border-radius:0 10px 10px 0;margin:20px 0}.explain b{color:var(--accent);font-size:12px;letter-spacing:.6px;text-transform:uppercase}.explain p{margin:7px 0 0;font-size:14px}.modalactions{display:flex;gap:10px;flex-wrap:wrap}.secondary{border:1px solid #3d4a5e;padding:10px 16px;border-radius:9px;color:#d5e2f0;background:#222b38;font-weight:650;font-size:13px}.note{font-size:12px;color:#8d98ab;margin-top:17px}.kbd{color:#a6c5db}.sr-only{position:absolute;left:-9999px}@media(max-width:980px){.layout{grid-template-columns:175px 1fr;gap:18px}.cards{grid-template-columns:1fr}.hero{padding-top:45px}}@media(max-width:680px){.shell{padding:0 17px}.top{height:67px}.version,.toplink{display:none}.hero{padding-top:38px}.intro{font-size:15px}h1{letter-spacing:-1.7px}.layout{display:block;margin-top:27px}.sidebar{position:static;margin-bottom:23px}.navs{display:flex;overflow:auto;gap:5px;padding-bottom:8px}.aside-title{margin-bottom:6px}.navitem{white-space:nowrap;width:auto;padding:9px 13px;border:1px solid #272e3b}.navcount,.aside-foot{display:none}.results-head h2{font-size:18px}.search{height:59px;padding-left:47px;padding-right:20px;font-size:15px}.mag{top:18px;left:15px}.key{display:none}.footer{display:block}.modalhead,.modalbody{padding:19px}.card{padding:19px}}
+</style>
+</head>
+<body>
+<div class="shell"><header class="top"><a class="brand" href="#" aria-label="Unity Atlas home"><span class="brand-mark">◇</span><span>unity<span>atlas</span><span style="color:#727d8e">.</span></span></a><div class="topright"><span class="version">UNITY 6 · C#</span><a class="toplink" href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/" target="_blank" rel="noopener">Official scripting API ↗</a></div></header>
+<section class="hero"><div class="eyebrow">Your Unity development companion</div><h1>Find the code.<br><em>Build the game.</em></h1><p class="intro">Search Unity concepts, methods, and everyday problems. Get ready-to-adapt C# examples, clear explanations, and the official documentation.</p><div class="search-wrap"><label class="sr-only" for="search">Search Unity code</label><svg class="mag" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input class="search" id="search" placeholder="Try 'player input', 'raycast', 'audio'..." autocomplete="off" spellcheck="false"><span class="key">Ctrl K</span></div><div class="suggest">Popular searches: <button class="pill suggestion" data-query="player input">Player input</button><button class="pill suggestion" data-query="movement">Movement</button><button class="pill suggestion" data-query="raycast">Raycasting</button><button class="pill suggestion" data-query="photon">Photon</button><button class="pill suggestion" data-query="ui">UI</button></div></section>
+<main class="layout"><aside class="sidebar"><div class="aside-title">Explore topics</div><nav class="navs" id="categories" aria-label="Categories"></nav><div class="aside-foot"><strong>Can't find something?</strong><p>Search the complete official Unity documentation for any topic.</p><a id="allDocsSidebar" href="https://docs.unity3d.com/" target="_blank" rel="noopener">Explore Unity Docs ↗</a></div></aside><section class="main" aria-label="Search results"><div class="results-head"><div><h2 id="sectionTitle">Explore code snippets</h2><small id="count"></small></div><select class="sort" id="sort" aria-label="Sort results"><option value="relevant">Most relevant</option><option value="az">A to Z</option></select></div><div class="cards" id="cards"></div></section></main><footer class="footer"><span>Unity Atlas · Community-made learning tool. Not affiliated with Unity Technologies.</span><span>Original examples · <a href="https://docs.unity3d.com/" target="_blank" rel="noopener">Official Unity documentation ↗</a></span></footer></div>
+<dialog id="detail"><div class="modalhead"><div><div class="category" id="detailCategory"></div><h2 id="detailTitle"></h2></div><button class="close" id="close" aria-label="Close">×</button></div><div class="modalbody"><p id="detailDescription"></p><div class="codebar"><span>C# · EXAMPLE</span><button class="copy" id="copy">Copy code</button></div><pre class="fullcode"><code id="detailCode"></code></pre><div class="explain"><b>How it works</b><p id="detailExplanation"></p></div><div class="modalactions"><a class="primary" id="docsLink" target="_blank" rel="noopener">Read official docs ↗</a><button class="secondary" id="favoriteDetail">☆ Save snippet</button></div><div class="note" id="detailNote"></div></div></dialog>
+<script>
+const A='https://docs.unity3d.com/6000.0/Documentation/ScriptReference/';
+const M='https://docs.unity3d.com/6000.0/Documentation/Manual/';
+const N='https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/';
+const P='https://doc.photonengine.com/pun/current/';
+const data=[
+{id:'input-keyboard',title:'Keyboard input (New Input System)',category:'Input',tags:['player input','keyboard','wasd','movement','keypress','input system','unity 6'],desc:'Read WASD and spacebar with Unity’s newer Input System package.',code:`using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class KeyboardReader : MonoBehaviour
+{
+    void Update()
+    {
+        if (Keyboard.current == null) return;
+
+        Vector2 movement = Vector2.zero;
+        if (Keyboard.current.wKey.isPressed) movement.y += 1;
+        if (Keyboard.current.sKey.isPressed) movement.y -= 1;
+        if (Keyboard.current.dKey.isPressed) movement.x += 1;
+        if (Keyboard.current.aKey.isPressed) movement.x -= 1;
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            Debug.Log("Jump pressed!");
+
+        Debug.Log(movement.normalized);
+    }
+}`,explain:'Keyboard.current accesses the active keyboard. isPressed is true while a key is held; wasPressedThisFrame fires once when pressed. Enable/install the Input System package in Unity’s Package Manager.',url:N+'Keyboard.html',note:'Requires the Input System package. This is keyboard-only; Input Actions are better for rebinding and gamepads.'},
+{id:'input-actions',title:'PlayerInput with Input Actions',category:'Input',tags:['player input','input system','action','controller','gamepad','onmove','wasd','movement'],desc:'Use a PlayerInput component and read an action named Move.',code:`using UnityEngine;
+using UnityEngine.InputSystem;
+
+[RequireComponent(typeof(PlayerInput))]
+public class PlayerActions : MonoBehaviour
+{
+    private PlayerInput playerInput;
+
+    void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
+
+    void Update()
+    {
+        Vector2 move = playerInput.actions["Move"].ReadValue<Vector2>();
+        Debug.Log($"Move input: {move}");
+    }
+}`,explain:'Create an Input Actions asset with a Vector2 Move action and bind a 2D Vector composite (WASD) or gamepad stick. Assign the asset to PlayerInput on the same GameObject. Reading in Update gives the current input each frame.',url:N+'PlayerInput.html',note:'The Move action must exist in the action asset; it is not created automatically by this script.'},
+{id:'legacy-input',title:'Input.GetAxis (Legacy Input Manager)',category:'Input',tags:['player input','old input','legacy','horizontal','vertical','wasd','movement'],desc:'Read built-in horizontal and vertical axes in projects using the legacy Input Manager.',code:`using UnityEngine;
+
+public class LegacyInput : MonoBehaviour
+{
+    void Update()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+        Vector3 direction = new Vector3(x, 0f, z);
+        Debug.Log(direction);
+    }
+}`,explain:'GetAxis returns a smoothed axis value (normally -1 to 1 for keyboard/joystick). This works only when legacy input is enabled in Active Input Handling.',url:A+'Input.GetAxis.html',note:'Legacy API: for new Unity 6 projects, Unity recommends the Input System package.'},
+{id:'character-move',title:'CharacterController movement',category:'Movement',tags:['player input','movement','fps','controller','walking','character','wasd'],desc:'Move a 3D character using a CharacterController and the new Input System.',code:`using UnityEngine;
+using UnityEngine.InputSystem;
+
+[RequireComponent(typeof(CharacterController))]
+public class SimpleMover : MonoBehaviour
+{
+    public float speed = 5f;
+    CharacterController controller;
+
+    void Awake() => controller = GetComponent<CharacterController>();
+
+    void Update()
+    {
+        if (Keyboard.current == null) return;
+        Vector3 dir = Vector3.zero;
+        if (Keyboard.current.wKey.isPressed) dir += transform.forward;
+        if (Keyboard.current.sKey.isPressed) dir -= transform.forward;
+        if (Keyboard.current.aKey.isPressed) dir -= transform.right;
+        if (Keyboard.current.dKey.isPressed) dir += transform.right;
+
+        controller.Move(dir.normalized * speed * Time.deltaTime);
+    }
+}`,explain:'CharacterController.Move accepts a displacement, not a velocity, so multiply speed by Time.deltaTime. This basic example handles horizontal movement only; Move does not automatically apply gravity.',url:A+'CharacterController.Move.html',note:'Add a CharacterController component. Gravity and jumping require additional code.'},
+{id:'rigidbody-force',title:'Rigidbody.AddForce',category:'Physics',tags:['movement','physics','rigidbody','push','force','jump','velocity'],desc:'Apply physics-based force to a Rigidbody.',code:`using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class ForceExample : MonoBehaviour
+{
+    public float strength = 8f;
+    Rigidbody rb;
+
+    void Awake() => rb = GetComponent<Rigidbody>();
+
+    void FixedUpdate()
+    {
+        rb.AddForce(Vector3.forward * strength, ForceMode.Force);
+    }
+}`,explain:'AddForce applies a force through Unity physics. FixedUpdate is the recommended loop for physics changes. ForceMode determines how mass and time affect acceleration.',url:A+'Rigidbody.AddForce.html',note:'Example continuously applies force; for a one-time push, call AddForce only when an event occurs.'},
+{id:'rigidbody-move',title:'Rigidbody.MovePosition',category:'Physics',tags:['movement','rigidbody','physics','kinematic','smooth movement','position'],desc:'Move a kinematic Rigidbody in the physics update.',code:`using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class KinematicMover : MonoBehaviour
+{
+    public Vector3 velocity = Vector3.forward * 3f;
+    Rigidbody rb;
+
+    void Awake() => rb = GetComponent<Rigidbody>();
+
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+    }
+}`,explain:'MovePosition requests a new position during a physics step and works with Rigidbody interpolation. It is commonly used for kinematic movement.',url:A+'Rigidbody.MovePosition.html',note:'Set the Rigidbody to Is Kinematic for this pattern.'},
+
+{id:'lerp',title:'Smooth position with Vector3.Lerp',category:'Movement',tags:['lerp','smooth','interpolate','door','animate','movement','position'],desc:'Move between two positions over a specific duration.',code:`using UnityEngine;
+using System.Collections;
+
+public class MoveBetween : MonoBehaviour
+{
+    public Transform target;
+    public float duration = 2f;
+
+    public IEnumerator MoveToTarget()
+    {
+        if (target == null || duration <= 0f) yield break;
+        Vector3 start = transform.position;
+        Vector3 end = target.position;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            transform.position = Vector3.Lerp(start, end, t);
+            yield return null;
+        }
+        transform.position = end;
+    }
+}`,explain:'The coroutine moves from a captured start position to a captured end position. A time-based interpolation fraction ensures it reaches the exact target after duration seconds.',url:A+'Vector3.Lerp.html',note:'Call StartCoroutine(MoveToTarget()) from a button, event, or other method. Assign target in the Inspector.'},
+{id:'raycast',title:'Physics.Raycast',category:'Physics',tags:['raycast','shoot','hit','interaction','ray','camera','collision'],desc:'Cast a ray from the camera to detect what is in front of the player.',code:`using UnityEngine;
+
+public class LookRaycast : MonoBehaviour
+{
+    public Camera playerCamera;
+    public float range = 5f;
+
+    void Update()
+    {
+        if (playerCamera == null) return;
+        Ray ray = new Ray(playerCamera.transform.position,
+                          playerCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, range))
+            Debug.Log("Looking at: " + hit.collider.name);
+    }
+}`,explain:'Physics.Raycast tests the nearest collider along the ray. The RaycastHit contains information such as collider, point, normal, and distance.',url:A+'Physics.Raycast.html',note:'Assign a camera in the Inspector. This works with 3D colliders, not 2D colliders.'},
+{id:'collision-enter',title:'OnCollisionEnter',category:'Physics',tags:['collision','contact','hit','rigidbody','detect','physics'],desc:'Detect when 3D physics objects begin colliding.',code:`using UnityEngine;
+
+public class CollisionReporter : MonoBehaviour
+{
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Hit: " + collision.gameObject.name);
+    }
+}`,explain:'Unity calls OnCollisionEnter when a qualifying 3D collider contact begins. Collision callbacks require appropriate collider/Rigidbody combinations.',url:A+'Collider.OnCollisionEnter.html',note:'For trigger volumes, use OnTriggerEnter instead.'},
+{id:'trigger',title:'OnTriggerEnter',category:'Physics',tags:['trigger','collider','pickup','zone','detect','enter'],desc:'Detect objects entering a trigger collider.',code:`using UnityEngine;
+
+public class TriggerZone : MonoBehaviour
+{
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            Debug.Log("Player entered the zone");
+    }
+}`,explain:'Mark a 3D collider Is Trigger. Unity invokes this when another collider enters; one of the objects normally needs a Rigidbody for trigger events.',url:A+'Collider.OnTriggerEnter.html',note:'Add the Player tag to the player GameObject before using this example.'},
+{id:'instantiate',title:'Instantiate a prefab',category:'GameObjects',tags:['spawn','instantiate','prefab','create object','clone','bullet'],desc:'Spawn a prefab at a chosen position and rotation.',code:`using UnityEngine;
+
+public class PrefabSpawner : MonoBehaviour
+{
+    public GameObject prefab;
+    public Transform spawnPoint;
+
+    public void Spawn()
+    {
+        if (prefab == null || spawnPoint == null) return;
+        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+    }
+}`,explain:'Instantiate makes a copy of a prefab or GameObject. Assign both fields in the Inspector and call Spawn() when you want to create the object.',url:A+'Object.Instantiate.html'},
+{id:'destroy',title:'Destroy a GameObject',category:'GameObjects',tags:['destroy','delete','remove','cleanup','game object'],desc:'Remove an object after a short delay.',code:`using UnityEngine;
+
+public class AutoDestroy : MonoBehaviour
+{
+    public float lifetime = 3f;
+
+    void Start()
+    {
+        Destroy(gameObject, lifetime);
+    }
+}`,explain:'Destroy schedules removal of the GameObject. The optional second parameter delays its destruction by a number of seconds.',url:A+'Object.Destroy.html'},
+{id:'getcomponent',title:'GetComponent<T>()',category:'GameObjects',tags:['component','find','reference','script','rigidbody','getcomponent'],desc:'Find a component attached to the same GameObject.',code:`using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class GetComponentExample : MonoBehaviour
+{
+    Rigidbody rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        Debug.Log("Found Rigidbody: " + (rb != null));
+    }
+}`,explain:'GetComponent<T> looks for a component of type T on the GameObject. Cache references in Awake or Start rather than searching every frame.',url:A+'GameObject.GetComponent.html'},
+
+{id:'tags',title:'CompareTag',category:'GameObjects',tags:['tag','player','enemy','collision','check','compare'],desc:'Check tags efficiently without string equality on tag properties.',code:`using UnityEngine;
+
+public class TagCheck : MonoBehaviour
+{
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            Debug.Log("Player detected");
+    }
+}`,explain:'CompareTag checks whether a GameObject has the named tag. Create the tag in Unity’s Tags and Layers settings first.',url:A+'Component.CompareTag.html'},
+{id:'audio-play',title:'AudioSource.Play',category:'Audio',tags:['audio','sound','music','play sound','speaker','sfx'],desc:'Play an assigned audio clip through an AudioSource.',code:`using UnityEngine;
+
+[RequireComponent(typeof(AudioSource))]
+public class SoundPlayer : MonoBehaviour
+{
+    AudioSource source;
+
+    void Awake() => source = GetComponent<AudioSource>();
+
+    public void PlaySound()
+    {
+        source.Play();
+    }
+}`,explain:'Put an AudioSource on the object and assign an AudioClip in the Inspector. Play starts the source’s clip; use PlayOneShot for overlapping sound effects.',url:A+'AudioSource.Play.html',note:'Call PlaySound() from a button or another script.'},
+{id:'audio-oneshot',title:'AudioSource.PlayOneShot',category:'Audio',tags:['audio','sound','oneshot','sound effect','sfx','button'],desc:'Play a short sound effect without interrupting other one-shots.',code:`using UnityEngine;
+
+[RequireComponent(typeof(AudioSource))]
+public class OneShotSound : MonoBehaviour
+{
+    public AudioClip clickSound;
+    AudioSource source;
+
+    void Awake() => source = GetComponent<AudioSource>();
+
+    public void PlayClick()
+    {
+        if (clickSound != null)
+            source.PlayOneShot(clickSound);
+    }
+}`,explain:'PlayOneShot plays the given clip through the AudioSource without replacing its main AudioClip property.',url:A+'AudioSource.PlayOneShot.html'},
+
+{id:'ui-button',title:'UI Button onClick',category:'UI',tags:['ui','button','click','interface','menu','event'],desc:'Register a listener for a Unity UI Button.',code:`using UnityEngine;
+using UnityEngine.UI;
+
+public class ButtonListener : MonoBehaviour
+{
+    public Button button;
+
+    void Start()
+    {
+        if (button != null)
+            button.onClick.AddListener(HandleClick);
+    }
+
+    void HandleClick() => Debug.Log("Clicked!");
+}`,explain:'Assign a UI Button from the scene to the button field. AddListener subscribes to the button click. This uses Unity UI (uGUI), not UI Toolkit.',url:'https://docs.unity3d.com/Packages/com.unity.ugui@2.0/api/UnityEngine.UI.Button.html'},
+{id:'ui-text',title:'TextMeshPro UI text',category:'UI',tags:['ui','text','tmp','textmeshpro','score','label'],desc:'Update TextMeshPro text from a script.',code:`using UnityEngine;
+using TMPro;
+
+public class ScoreText : MonoBehaviour
+{
+    public TMP_Text scoreLabel;
+    int score = 0;
+
+    public void AddPoint()
+    {
+        score++;
+        if (scoreLabel != null)
+            scoreLabel.text = $"Score: {score}";
+    }
+}`,explain:'TMP_Text is the common base type for TextMeshPro UI and 3D text. Assign the text component in the Inspector.',url:'https://docs.unity3d.com/Packages/com.unity.textmeshpro@3.0/api/TMPro.TMP_Text.html'},
+{id:'scene-load',title:'SceneManager.LoadScene',category:'Scenes',tags:['scene','level','change scene','load','menu','switch'],desc:'Switch to a scene by its name.',code:`using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class LevelLoader : MonoBehaviour
+{
+    public void LoadLevel(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+}`,explain:'LoadScene loads the named scene. Add the target scene to the project’s enabled build scene list so it can be loaded at runtime.',url:A+'SceneManagement.SceneManager.LoadScene.html'},
+{id:'scene-reload',title:'Reload current scene',category:'Scenes',tags:['scene','restart','reload','reset','respawn'],desc:'Restart the currently loaded scene.',code:`using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class RestartLevel : MonoBehaviour
+{
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+}`,explain:'GetActiveScene returns the active Scene. Loading its build index resets the scene to its initial state.',url:A+'SceneManagement.SceneManager.GetActiveScene.html'},
+{id:'coroutine',title:'Coroutine with WaitForSeconds',category:'Scripting',tags:['coroutine','wait','delay','timer','seconds','pause'],desc:'Run code after a delay without freezing the game.',code:`using UnityEngine;
+using System.Collections;
+
+public class DelayedAction : MonoBehaviour
+{
+    void Start() => StartCoroutine(DelayedMessage());
+
+    IEnumerator DelayedMessage()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("Two seconds passed!");
+    }
+}`,explain:'A coroutine can pause at yield return and resume in a later frame. WaitForSeconds uses scaled game time, so changing Time.timeScale affects it.',url:A+'WaitForSeconds.html'},
+{id:'delta',title:'Time.deltaTime',category:'Scripting',tags:['time','delta','framerate','update','speed','movement'],desc:'Keep movement and counters independent of frame rate.',code:`using UnityEngine;
+
+public class TimeExample : MonoBehaviour
+{
+    public float unitsPerSecond = 4f;
+
+    void Update()
+    {
+        transform.position += Vector3.right * unitsPerSecond * Time.deltaTime;
+    }
+}`,explain:'deltaTime tells you how much scaled time passed since the last frame. Multiply a per-second rate by deltaTime to get a per-frame change.',url:A+'Time-deltaTime.html'},
+{id:'findobjects',title:'FindFirstObjectByType',category:'GameObjects',tags:['find','object','reference','manager','singleton','script'],desc:'Find the first active loaded object with a given component type.',code:`using UnityEngine;
+
+public class FindExample : MonoBehaviour
+{
+    void Start()
+    {
+        Camera cameraInScene = FindFirstObjectByType<Camera>();
+        if (cameraInScene != null)
+            Debug.Log(cameraInScene.name);
+    }
+}`,explain:'FindFirstObjectByType searches loaded objects. It is convenient during setup, but serialized Inspector references and cached objects are better for frequently accessed dependencies.',url:A+'Object.FindFirstObjectByType.html'},
+{id:'serializefield',title:'[SerializeField] private fields',category:'Scripting',tags:['serializefield','inspector','private','public','reference','variable'],desc:'Expose private fields for editing in the Unity Inspector.',code:`using UnityEngine;
+
+public class InspectorFields : MonoBehaviour
+{
+    [SerializeField] private float movementSpeed = 5f;
+    [SerializeField] private GameObject target;
+
+    void Start()
+    {
+        Debug.Log($"Speed: {movementSpeed}, Target: {target}");
+    }
+}`,explain:'SerializeField makes eligible private fields visible and saved by Unity’s serializer without making them publicly writable from other classes.',url:A+'SerializeField.html'},
+{id:'layer-mask',title:'LayerMask for raycasts',category:'Physics',tags:['layer','layermask','collision','raycast','filter','ignore'],desc:'Restrict physics raycasts to selected layers.',code:`using UnityEngine;
+
+public class LayerRay : MonoBehaviour
+{
+    public LayerMask hittableLayers;
+
+    void Update()
+    {
+        if (Physics.Raycast(transform.position,
+                            transform.forward,
+                            out RaycastHit hit,
+                            10f,
+                            hittableLayers))
+        {
+            Debug.Log("Hit: " + hit.collider.name);
+        }
+    }
+}`,explain:'A LayerMask is a bitmask of included layers. Expose one in the Inspector to choose which colliders a raycast should consider.',url:A+'LayerMask.html'},
+{id:'ignore-collision',title:'Physics.IgnoreCollision',category:'Physics',tags:['collision','ignore','collider','player','self','disable collision'],desc:'Stop two specific colliders from colliding.',code:`using UnityEngine;
+
+public class IgnorePair : MonoBehaviour
+{
+    public Collider first;
+    public Collider second;
+
+    void Start()
+    {
+        if (first != null && second != null)
+            Physics.IgnoreCollision(first, second, true);
+    }
+}`,explain:'IgnoreCollision disables physical contact between the two supplied colliders. It only affects the selected pair, not an entire layer.',url:A+'Physics.IgnoreCollision.html'},
+{id:'input-mouse',title:'Mouse click (New Input System)',category:'Input',tags:['player input','mouse','click','input system','shoot','button'],desc:'Detect a left mouse click with the newer Input System.',code:`using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class MouseClick : MonoBehaviour
+{
+    void Update()
+    {
+        if (Mouse.current != null &&
+            Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Debug.Log("Left click!");
+        }
+    }
+}`,explain:'Mouse.current represents the current mouse device. wasPressedThisFrame becomes true on the frame the button changes to pressed.',url:N+'Mouse.html',note:'Requires the Input System package.'},
+{id:'animation-trigger',title:'Animator.SetTrigger',category:'Animation',tags:['animator','animation','trigger','play','transition','jump'],desc:'Fire an Animator trigger parameter to transition animations.',code:`using UnityEngine;
+
+[RequireComponent(typeof(Animator))]
+public class AnimateAction : MonoBehaviour
+{
+    Animator animator;
+
+    void Awake() => animator = GetComponent<Animator>();
+
+    public void PlayJump()
+    {
+        animator.SetTrigger("Jump");
+    }
+}`,explain:'Add a Trigger parameter called Jump in the Animator Controller, and create a transition that uses it. SetTrigger activates the condition.',url:A+'Animator.SetTrigger.html'},
+{id:'animation-bool',title:'Animator.SetBool',category:'Animation',tags:['animator','animation','bool','running','state','walk'],desc:'Control Animator transitions using a boolean.',code:`using UnityEngine;
+
+[RequireComponent(typeof(Animator))]
+public class AnimationState : MonoBehaviour
+{
+    Animator animator;
+
+    void Awake() => animator = GetComponent<Animator>();
+
+    public void SetRunning(bool isRunning)
+    {
+        animator.SetBool("IsRunning", isRunning);
+    }
+}`,explain:'Animator.SetBool sets a bool parameter. Use it in transition conditions for idle/running and similar states.',url:A+'Animator.SetBool.html'},
+{id:'photon-rpc',title:'Photon PUN 2 RPC',category:'Networking',tags:['photon','pun2','multiplayer','rpc','network','audio','sound','sync'],desc:'Call a method on all clients in a Photon PUN 2 room.',code:`using UnityEngine;
+using Photon.Pun;
+
+[RequireComponent(typeof(PhotonView))]
+public class NetworkAction : MonoBehaviourPun
+{
+    public void TriggerEffect()
+    {
+        photonView.RPC(nameof(ShowEffect), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void ShowEffect()
+    {
+        Debug.Log("Effect shown for all clients");
+    }
+}`,explain:'PUN 2 routes the RPC to matching PhotonViews on clients. The object must have a matching scene/instantiation PhotonView identity in each client. Use RpcTarget.AllBuffered only when late joiners need past events.',url:P+'gameplay/rpcsandraiseevent',note:'Photon PUN 2 is a separate package, not a built-in Unity API. PUN 2 is in maintenance/LTS mode.'},
+{id:'photon-rigidbody',title:'Photon Rigidbody synchronization',category:'Networking',tags:['photon','pun2','multiplayer','rigidbody','sync','network','observed components'],desc:'Set up PhotonView and PhotonRigidbodyView for synchronized physics state.',code:`using UnityEngine;
+using Photon.Pun;
+
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(Rigidbody))]
+public class OwnedRigidbody : MonoBehaviourPun
+{
+    private Rigidbody rb;
+
+    void Awake() => rb = GetComponent<Rigidbody>();
+
+    void FixedUpdate()
+    {
+        if (!photonView.IsMine) return;
+        // The owning client makes movement/physics decisions here.
+        // Add PhotonRigidbodyView to PhotonView Observed Components.
+    }
+}`,explain:'Add a PhotonView and PhotonRigidbodyView, then put PhotonRigidbodyView in PhotonView’s Observed Components list. PUN typically synchronizes owner-authored states; it is not a dedicated authoritative game server.',url:P+'gameplay/synchronization-and-state',note:'Configure the PhotonView and PhotonRigidbodyView in the Inspector. Ownership and room-object authority need separate consideration.'},
+{id:'photon-audio',title:'Play a sound over Photon RPC',category:'Networking',tags:['photon','pun2','multiplayer','sound','audio','rpc','play once'],desc:'Start the same sound on each connected client in the room.',code:`using UnityEngine;
+using Photon.Pun;
+
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(PhotonView))]
+public class NetworkSound : MonoBehaviourPun
+{
+    AudioSource audioSource;
+    void Awake() => audioSource = GetComponent<AudioSource>();
+
+    public void PlayForEveryone()
+    {
+        photonView.RPC(nameof(PlayLocal), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void PlayLocal()
+    {
+        audioSource.Play();
+    }
+}`,explain:'The RPC tells every client to play its local AudioSource. This sends a play command rather than streaming sound data. The AudioClip must be present on each client.',url:P+'gameplay/rpcsandraiseevent',note:'Photon PUN 2 package required. A room-shared scene PhotonView must have consistent network IDs.'},
+{"id": "input-event", "title": "InputAction event callbacks", "category": "Input", "tags": ["input system", "performed", "canceled", "events", "player input"], "desc": "React when an Input Action fires instead of polling every frame", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class JumpAction : MonoBehaviour\n{\n    [SerializeField] InputActionReference jump;\n\n    void OnEnable()\n    {\n        jump.action.performed += OnJump;\n        jump.action.Enable();\n    }\n    void OnDisable()\n    {\n        jump.action.performed -= OnJump;\n        jump.action.Disable();\n    }\n    void OnJump(InputAction.CallbackContext ctx)\n    {\n        Debug.Log(\"Jump!\");\n    }\n}", "explain": "Subscriptions must be removed on disable to prevent duplicate callbacks. Assign an Input Action Reference configured for the Jump button.", "url": "https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/Actions.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "input-rebind", "title": "Interactive control rebinding", "category": "Input", "tags": ["input system", "keybind", "rebind", "keyboard", "controls"], "desc": "Let the player pick a new keyboard or gamepad binding", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class RebindKey : MonoBehaviour\n{\n    [SerializeField] InputActionReference actionReference;\n    public void BeginRebind(int bindingIndex)\n    {\n        var action = actionReference.action;\n        action.Disable();\n        action.PerformInteractiveRebinding(bindingIndex)\n            .WithCancelingThrough(\"<Keyboard>/escape\")\n            .OnComplete(op => { op.Dispose(); action.Enable(); })\n            .OnCancel(op => { op.Dispose(); action.Enable(); })\n            .Start();\n    }\n}", "explain": "Interactive rebinding listens for a new control. Store overrides with SaveBindingOverridesAsJson for persistence. Do not rebind composite header entries.", "url": "https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/ActionBindings.html", "note": "Requires the Input System package. Supply a valid non-composite binding index."},
+{"id": "input-gamepad", "title": "Read gamepad sticks and buttons", "category": "Input", "tags": ["controller", "gamepad", "joystick", "stick", "button", "input system"], "desc": "Get analog movement and button presses with null-safe device checks", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class GamepadReader : MonoBehaviour\n{\n    void Update()\n    {\n        var pad = Gamepad.current;\n        if (pad == null) return;\n        Vector2 move = pad.leftStick.ReadValue();\n        if (pad.buttonSouth.wasPressedThisFrame)\n            Debug.Log(\"Action pressed\");\n        Debug.Log(move);\n    }\n}", "explain": "Reading controls directly is quick for prototypes; Input Actions offer rebinding and support multiple device types.", "url": "https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/Gamepad.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "movement-jump", "title": "Grounded CharacterController jump", "category": "Movement", "tags": ["jump", "gravity", "grounded", "character controller", "platformer"], "desc": "Move, jump, and apply gravity using CharacterController", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\n[RequireComponent(typeof(CharacterController))]\npublic class SimpleFPSMove : MonoBehaviour\n{\n    [SerializeField] float speed = 5f, jumpHeight = 1.5f, gravity = -20f;\n    CharacterController controller;\n    float verticalSpeed;\n    void Awake() => controller = GetComponent<CharacterController>();\n    void Update()\n    {\n        Vector2 input = Vector2.zero;\n        if (Keyboard.current != null)\n        {\n            var k = Keyboard.current;\n            input = new Vector2((k.dKey.isPressed?1:0)-(k.aKey.isPressed?1:0),\n                                (k.wKey.isPressed?1:0)-(k.sKey.isPressed?1:0));\n            if (controller.isGrounded && k.spaceKey.wasPressedThisFrame)\n                verticalSpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);\n        }\n        if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2f;\n        verticalSpeed += gravity * Time.deltaTime;\n        Vector3 horizontal = transform.TransformDirection(new Vector3(input.x,0,input.y).normalized);\n        controller.Move((horizontal*speed + Vector3.up*verticalSpeed)*Time.deltaTime);\n    }\n}", "explain": "Keep vertical velocity separately. CharacterController.Move does not apply gravity on its own.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/CharacterController.Move.html", "note": "Requires Input System + CharacterController. Uses local forward for WASD."},
+{"id": "movement-coyote", "title": "Coyote time for platformer jumps", "category": "Movement", "tags": ["platformer", "coyote time", "jump buffer", "jumping"], "desc": "Allow a small grace period after walking off a ledge", "code": "using UnityEngine;\n\npublic class JumpGrace : MonoBehaviour\n{\n    [SerializeField] float coyoteSeconds = .12f;\n    float lastGroundedTime = -999f;\n    public void ReportGrounded(bool grounded)\n    {\n        if (grounded) lastGroundedTime = Time.time;\n    }\n    public bool CanJump() => Time.time - lastGroundedTime <= coyoteSeconds;\n    public void ConsumeJump() => lastGroundedTime = -999f;\n}", "explain": "Your player movement controller should call ReportGrounded each frame and check CanJump before jumping; ConsumeJump prevents duplicate midair jumps.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Time-time.html", "note": "A reusable helper; integrate it with your existing jump script."},
+{"id": "movement-follow-camera", "title": "Third-person camera-relative movement", "category": "Movement", "tags": ["third person", "camera relative", "movement", "direction"], "desc": "Convert 2D input into directions relative to the camera", "code": "using UnityEngine;\n\npublic class CameraRelativeDirection : MonoBehaviour\n{\n    [SerializeField] Transform cameraTransform;\n    public Vector3 GetMoveDirection(Vector2 input)\n    {\n        Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;\n        Vector3 right = Vector3.ProjectOnPlane(cameraTransform.right, Vector3.up).normalized;\n        return Vector3.ClampMagnitude(right*input.x + forward*input.y, 1f);\n    }\n}", "explain": "Projecting onto the ground plane prevents the character from moving into the floor when the camera looks down.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Vector3.ProjectOnPlane.html", "note": "Call GetMoveDirection from your movement controller. Assign the camera transform."},
+{"id": "physics-interact", "title": "Raycast interaction with interfaces", "category": "Physics", "tags": ["interact", "raycast", "interface", "door", "pickup", "look at"], "desc": "Build a reusable interaction system for doors, pickups, and switches", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic interface IInteractable { void Interact(); }\n\npublic class LookInteractor : MonoBehaviour\n{\n    [SerializeField] Camera viewCamera;\n    [SerializeField] float reach = 3f;\n    void Update()\n    {\n        if (Keyboard.current == null || !Keyboard.current.eKey.wasPressedThisFrame) return;\n        if (Physics.Raycast(viewCamera.transform.position,viewCamera.transform.forward,\n                            out RaycastHit hit,reach))\n            hit.collider.GetComponentInParent<IInteractable>()?.Interact();\n    }\n}", "explain": "Implement IInteractable on any object that should react to E. This decouples your input script from individual objects.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.Raycast.html", "note": "Requires the Input System and a camera reference. Save the interface in a suitable .cs file."},
+{"id": "physics-overlap", "title": "Find enemies with OverlapSphereNonAlloc", "category": "Physics", "tags": ["overlap sphere", "proximity", "area of effect", "detect", "enemies"], "desc": "Query nearby colliders without creating a new array each frame", "code": "using UnityEngine;\n\npublic class ProximityScanner : MonoBehaviour\n{\n    [SerializeField] LayerMask targets;\n    [SerializeField] float radius = 6f;\n    readonly Collider[] hits = new Collider[32];\n    public int Scan()\n    {\n        return Physics.OverlapSphereNonAlloc(transform.position,radius,hits,targets);\n    }\n    void OnDrawGizmosSelected()\n    {\n        Gizmos.DrawWireSphere(transform.position,radius);\n    }\n}", "explain": "OverlapSphereNonAlloc writes results into a reusable buffer. If the count fills the buffer, increase its capacity.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.OverlapSphereNonAlloc.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "physics-spherecast", "title": "SphereCast for wide hit detection", "category": "Physics", "tags": ["spherecast", "raycast", "collision", "hit", "projectile"], "desc": "Use a thick cast to find hits that thin rays might miss", "code": "using UnityEngine;\n\npublic class WideHitCheck : MonoBehaviour\n{\n    [SerializeField] float radius = .25f, distance = 10f;\n    [SerializeField] LayerMask hitLayers;\n    public bool TryHit(out RaycastHit hit)\n    {\n        return Physics.SphereCast(transform.position,radius,transform.forward,\n                                  out hit,distance,hitLayers,QueryTriggerInteraction.Ignore);\n    }\n}", "explain": "A sphere cast sweeps a sphere over a distance; helpful for forgiving detection, not a replacement for all collision checks.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.SphereCast.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "physics-damage", "title": "Damage with IDamageable", "category": "Physics", "tags": ["damage", "health", "enemy", "projectile", "interface", "hit"], "desc": "Create damageable targets that bullets or hazards can affect", "code": "using UnityEngine;\n\npublic interface IDamageable { void TakeDamage(float amount); }\n\npublic class Health : MonoBehaviour, IDamageable\n{\n    [SerializeField] float maxHealth = 100;\n    float current;\n    void Awake() => current = maxHealth;\n    public void TakeDamage(float amount)\n    {\n        if (amount <= 0 || current <= 0) return;\n        current = Mathf.Max(0,current-amount);\n        if (current == 0) Debug.Log(\"Defeated\");\n    }\n}\n\n// On a raycast hit:\n// hit.collider.GetComponentInParent<IDamageable>()?.TakeDamage(10f);", "explain": "The interface lets multiple systems apply damage without needing to know the concrete Health component.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Collider.GetComponent.html", "note": "Split interface and components into files as needed."},
+{"id": "physics-ground-check", "title": "Reliable ground check with CheckSphere", "category": "Physics", "tags": ["ground check", "jump", "grounded", "physics", "platformer"], "desc": "Test whether the player is touching a ground layer", "code": "using UnityEngine;\n\npublic class GroundCheck : MonoBehaviour\n{\n    [SerializeField] Transform feet;\n    [SerializeField] LayerMask ground;\n    [SerializeField] float radius = .18f;\n    public bool IsGrounded => Physics.CheckSphere(feet.position,radius,ground);\n    void OnDrawGizmosSelected()\n    {\n        if (feet) Gizmos.DrawWireSphere(feet.position,radius);\n    }\n}", "explain": "Use a dedicated Feet transform at the bottom of the character. Layer masks prevent detecting the player itself.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.CheckSphere.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "physics-explosion", "title": "Area effect knockback", "category": "Physics", "tags": ["explosion", "force", "knockback", "overlap", "rigidbody"], "desc": "Apply force to nearby rigidbodies after an explosion", "code": "using UnityEngine;\n\npublic class Blast : MonoBehaviour\n{\n    [SerializeField] float radius = 5f, force = 500f;\n    [SerializeField] LayerMask affected;\n    public void Explode()\n    {\n        foreach (Collider hit in Physics.OverlapSphere(transform.position,radius,affected))\n        {\n            Rigidbody body = hit.attachedRigidbody;\n            if (body) body.AddExplosionForce(force,transform.position,radius,1f);\n        }\n    }\n}", "explain": "OverlapSphere selects candidates; AddExplosionForce changes the rigidbody motion. A single body with many colliders may be processed more than once.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Rigidbody.AddExplosionForce.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "objects-pool", "title": "Reusable object pool", "category": "GameObjects", "tags": ["object pool", "performance", "spawn", "prefab", "reuse", "bullets"], "desc": "Reuse spawned GameObjects instead of repeatedly instantiating them", "code": "using System.Collections.Generic;\nusing UnityEngine;\n\npublic class SimplePool : MonoBehaviour\n{\n    [SerializeField] GameObject prefab;\n    readonly Queue<GameObject> idle = new();\n    public GameObject Rent(Vector3 at)\n    {\n        var obj = idle.Count > 0 ? idle.Dequeue() : Instantiate(prefab);\n        obj.transform.position = at;\n        obj.SetActive(true);\n        return obj;\n    }\n    public void Return(GameObject obj)\n    {\n        obj.SetActive(false);\n        idle.Enqueue(obj);\n    }\n}", "explain": "Return used objects to the pool rather than Destroying them. Reset per-object state before reuse.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Object.Instantiate.html", "note": "Assign a prefab and call Return when the pooled effect or projectile is finished."},
+{"id": "objects-spawn-wave", "title": "Timed enemy spawning", "category": "GameObjects", "tags": ["spawn", "wave", "enemy", "coroutine", "prefab"], "desc": "Spawn a controlled wave of enemies over time", "code": "using System.Collections;\nusing UnityEngine;\n\npublic class WaveSpawner : MonoBehaviour\n{\n    [SerializeField] GameObject enemyPrefab;\n    [SerializeField] Transform[] spawnPoints;\n    [SerializeField] int count = 8;\n    [SerializeField] float delay = .6f;\n    public void StartWave() => StartCoroutine(SpawnWave());\n    IEnumerator SpawnWave()\n    {\n        if (spawnPoints.Length == 0) yield break;\n        for (int i = 0; i < count; i++)\n        {\n            Transform point = spawnPoints[Random.Range(0,spawnPoints.Length)];\n            Instantiate(enemyPrefab,point.position,point.rotation);\n            yield return new WaitForSeconds(delay);\n        }\n    }\n}", "explain": "A coroutine spaces out spawn operations across frames. Call StartWave from your game director.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.StartCoroutine.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "objects-dontdestroy", "title": "Persistent manager singleton", "category": "GameObjects", "tags": ["singleton", "manager", "dontdestroyonload", "scene", "global"], "desc": "Keep exactly one music or game manager across scene transitions", "code": "using UnityEngine;\n\npublic class GameManager : MonoBehaviour\n{\n    public static GameManager Instance { get; private set; }\n    void Awake()\n    {\n        if (Instance != null && Instance != this)\n        {\n            Destroy(gameObject);\n            return;\n        }\n        Instance = this;\n        DontDestroyOnLoad(gameObject);\n    }\n}", "explain": "Singleton-like managers can be useful for shared state, but overusing them couples unrelated scripts together.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Object.DontDestroyOnLoad.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scripting-events", "title": "C# events for game events", "category": "Scripting", "tags": ["event", "action", "observer", "game over", "score", "callbacks"], "desc": "Notify other systems without direct object references", "code": "using System;\nusing UnityEngine;\n\npublic class ScoreTracker : MonoBehaviour\n{\n    public event Action<int> ScoreChanged;\n    public int Score { get; private set; }\n    public void Award(int points)\n    {\n        Score += points;\n        ScoreChanged?.Invoke(Score);\n    }\n}\n// Subscribers use tracker.ScoreChanged += Handler;\n// and unsubscribe with -= Handler in OnDisable.", "explain": "Events are useful for HUDs, achievements, and effects. Remember to unsubscribe when listeners are disabled.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.OnDisable.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scripting-state", "title": "Finite state machine pattern", "category": "Scripting", "tags": ["state machine", "ai", "enemy", "state", "enum", "update"], "desc": "Organize enemy logic into predictable states", "code": "using UnityEngine;\n\npublic class GuardAI : MonoBehaviour\n{\n    enum State { Patrol, Chase, Search }\n    State state = State.Patrol;\n    [SerializeField] Transform player;\n    [SerializeField] float spotRange = 8f;\n    void Update()\n    {\n        float distance = Vector3.Distance(transform.position,player.position);\n        switch (state)\n        {\n            case State.Patrol:\n                if (distance < spotRange) state = State.Chase;\n                break;\n            case State.Chase:\n                if (distance > spotRange*1.5f) state = State.Search;\n                break;\n            case State.Search:\n                state = State.Patrol; // Replace with search behavior\n                break;\n        }\n    }\n}", "explain": "State transitions are separated from each state’s behavior. Expand each switch branch for movement, attacks, or animations.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.Update.html", "note": "Assign a player transform. This is an architecture starter, not a full enemy AI."},
+{"id": "scripting-timer", "title": "Cooldown without coroutines", "category": "Scripting", "tags": ["timer", "cooldown", "ability", "attack", "Time.time"], "desc": "Track when an ability can fire again", "code": "using UnityEngine;\n\npublic class Cooldown : MonoBehaviour\n{\n    [SerializeField] float seconds = .8f;\n    float nextUse;\n    public bool TryUse()\n    {\n        if (Time.time < nextUse) return false;\n        nextUse = Time.time + seconds;\n        return true;\n    }\n}", "explain": "Comparing a deadline to Time.time is a simple way to guard repeated actions.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Time-time.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scripting-save", "title": "Save and load JSON game progress", "category": "Scripting", "tags": ["save", "load", "json", "persistentdata", "file", "progress"], "desc": "Serialize a plain data object to disk and load it later", "code": "using System.IO;\nusing UnityEngine;\n\n[System.Serializable]\npublic class SaveData { public int level; public float playTime; }\n\npublic class SaveSystem : MonoBehaviour\n{\n    string PathName => Path.Combine(Application.persistentDataPath,\"save.json\");\n    public void Save(SaveData data)\n    {\n        File.WriteAllText(PathName,JsonUtility.ToJson(data,true));\n    }\n    public SaveData Load()\n    {\n        if (!File.Exists(PathName)) return new SaveData();\n        try { return JsonUtility.FromJson<SaveData>(File.ReadAllText(PathName)); }\n        catch (System.Exception e) { Debug.LogWarning(e.Message); return new SaveData(); }\n    }\n}", "explain": "JsonUtility serializes supported fields. persistentDataPath chooses a per-app writable folder. Files can be edited by the player; do not store secrets here.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/JsonUtility.ToJson.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scripting-scriptable", "title": "ScriptableObject item definitions", "category": "Scripting", "tags": ["scriptableobject", "inventory", "item", "data", "asset"], "desc": "Store shared item definitions as reusable project assets", "code": "using UnityEngine;\n\n[CreateAssetMenu(menuName = \"Game/Item\")]\npublic class ItemDefinition : ScriptableObject\n{\n    public string itemName;\n    public Sprite icon;\n    public int value;\n}\n\n// Create assets via Assets > Create > Game > Item.\n// Reference an ItemDefinition asset from inventory components.", "explain": "ScriptableObjects make it easier to share read-mostly definitions without duplicating values in each prefab.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/ScriptableObject.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scripting-interface", "title": "Generic interactable door", "category": "Scripting", "tags": ["interface", "door", "interact", "interaction", "design"], "desc": "Define one interaction contract and implement it on a door", "code": "using UnityEngine;\n\npublic class DoorInteractable : MonoBehaviour, IInteractable\n{\n    [SerializeField] Animator animator;\n    bool open;\n    public void Interact()\n    {\n        open = !open;\n        animator.SetBool(\"Open\",open);\n    }\n}\n// Uses IInteractable from the Raycast Interaction example.", "explain": "Interfaces let the same player interaction script control different objects. Create an Animator bool named Open.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Animator.SetBool.html", "note": "Requires the IInteractable interface shown in Raycast interaction with interfaces."},
+{"id": "ui-health", "title": "Health bar event binding", "category": "UI", "tags": ["health bar", "slider", "ui", "hud", "event"], "desc": "Update a UI bar when health changes, without polling every frame", "code": "using UnityEngine;\nusing UnityEngine.UI;\n\npublic class HealthBar : MonoBehaviour\n{\n    [SerializeField] Slider slider;\n    public void ShowHealth(float current,float maximum)\n    {\n        slider.value = maximum <= 0 ? 0 : current / maximum;\n    }\n}\n// Call ShowHealth from your health-changed event.", "explain": "Set the Slider range to 0–1 in the Inspector. Event-driven UI updates avoid repetitive lookups.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/UI.Slider.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "ui-pause", "title": "Pause game and show menu", "category": "UI", "tags": ["pause", "menu", "escape", "time scale", "input"], "desc": "Toggle pause state while retaining unscaled menu responsiveness", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class PauseMenu : MonoBehaviour\n{\n    [SerializeField] GameObject panel;\n    bool paused;\n    void Update()\n    {\n        if (Keyboard.current?.escapeKey.wasPressedThisFrame == true)\n            Toggle();\n    }\n    public void Toggle()\n    {\n        paused = !paused;\n        Time.timeScale = paused ? 0f : 1f;\n        panel.SetActive(paused);\n    }\n    void OnDisable() { if (paused) Time.timeScale = 1f; }\n}", "explain": "Setting timeScale to zero stops most scaled-time movement, but does not stop all code or audio. Use unscaled time for UI animations.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Time-timeScale.html", "note": "Requires the Input System. Remember to unpause when exiting gameplay."},
+{"id": "ui-typewriter", "title": "Coroutine text reveal effect", "category": "UI", "tags": ["typewriter", "textmeshpro", "text", "dialogue", "coroutine"], "desc": "Reveal dialog text one character at a time", "code": "using System.Collections;\nusing TMPro;\nusing UnityEngine;\n\npublic class Typewriter : MonoBehaviour\n{\n    [SerializeField] TMP_Text label;\n    [SerializeField] float charDelay = .03f;\n    Coroutine running;\n    public void Show(string message)\n    {\n        if (running != null) StopCoroutine(running);\n        running = StartCoroutine(Reveal(message));\n    }\n    IEnumerator Reveal(string message)\n    {\n        label.text = message;\n        label.maxVisibleCharacters = 0;\n        for (int i=1;i<=label.textInfo.characterCount;i++)\n        {\n            label.maxVisibleCharacters = i;\n            yield return new WaitForSecondsRealtime(charDelay);\n        }\n    }\n}", "explain": "TextMeshPro can hide characters without rebuilding the displayed string. ForceMeshUpdate may be needed before reading textInfo for newly assigned text.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/MonoBehaviour.StartCoroutine.html", "note": "Uses TextMeshPro. Call label.ForceMeshUpdate() after setting text if the count is stale."},
+{"id": "audio-fade", "title": "Fade music in and out", "category": "Audio", "tags": ["music", "fade", "crossfade", "audio", "coroutine"], "desc": "Gradually change an AudioSource volume across real time", "code": "using System.Collections;\nusing UnityEngine;\n\npublic class AudioFade : MonoBehaviour\n{\n    [SerializeField] AudioSource source;\n    public void FadeTo(float target,float seconds) => StartCoroutine(Fade(target,seconds));\n    IEnumerator Fade(float target,float seconds)\n    {\n        float start = source.volume;\n        if (seconds <= 0) { source.volume = target; yield break; }\n        float elapsed = 0;\n        while (elapsed < seconds)\n        {\n            elapsed += Time.unscaledDeltaTime;\n            source.volume = Mathf.Lerp(start,target,elapsed/seconds);\n            yield return null;\n        }\n        source.volume = target;\n    }\n}", "explain": "A coroutine interpolates between volumes, and unscaledDeltaTime keeps fading when the game is paused. Stop previous fade coroutines if you allow overlapping requests.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AudioSource-volume.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "audio-distance", "title": "Footstep sounds on animation events", "category": "Audio", "tags": ["footsteps", "animation event", "audio", "walking"], "desc": "Trigger footsteps on exact animation frames", "code": "using UnityEngine;\n\npublic class FootstepEvents : MonoBehaviour\n{\n    [SerializeField] AudioSource source;\n    [SerializeField] AudioClip[] clips;\n    public void Footstep()\n    {\n        if (clips.Length == 0) return;\n        source.PlayOneShot(clips[Random.Range(0,clips.Length)]);\n    }\n}\n// Add an Animation Event calling Footstep on each foot contact frame.", "explain": "Animation Events align sound timing with the character’s walk cycle and can randomize sounds for variation.", "url": "https://docs.unity3d.com/6000.0/Documentation/Manual/AnimationEventsOnImportedClips.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "animation-layer", "title": "Animator layer control during attacks", "category": "Animation", "tags": ["animator", "layer", "attack", "animation blending"], "desc": "Blend an upper-body action over walking animation", "code": "using UnityEngine;\n\npublic class AttackLayerBlend : MonoBehaviour\n{\n    [SerializeField] Animator animator;\n    [SerializeField] int attackLayer = 1;\n    public void SetAttacking(bool attacking)\n    {\n        animator.SetLayerWeight(attackLayer,attacking ? 1f : 0f);\n    }\n}", "explain": "Use an Avatar Mask on the upper-body Animator layer; blend weight selects how much that layer contributes.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Animator.SetLayerWeight.html", "note": "Requires an Animator Controller with a configured upper-body layer and Avatar Mask."},
+{"id": "animation-event", "title": "Animation event callback", "category": "Animation", "tags": ["animation event", "attack", "melee", "timing"], "desc": "Apply melee damage on the exact attack animation frame", "code": "using UnityEngine;\n\npublic class MeleeAnimationEvents : MonoBehaviour\n{\n    [SerializeField] Collider hitbox;\n    public void BeginHitWindow() => hitbox.enabled = true;\n    public void EndHitWindow() => hitbox.enabled = false;\n    void OnDisable() { if (hitbox) hitbox.enabled = false; }\n}", "explain": "Add animation events named BeginHitWindow and EndHitWindow; put the damage logic in a separate hitbox component.", "url": "https://docs.unity3d.com/6000.0/Documentation/Manual/AnimationEventsOnImportedClips.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scene-async", "title": "Asynchronous scene loading", "category": "Scenes", "tags": ["scene", "loading", "async", "progress", "loading screen"], "desc": "Load a scene without blocking the main thread during the whole process", "code": "using System.Collections;\nusing UnityEngine;\nusing UnityEngine.SceneManagement;\n\npublic class AsyncLevelLoader : MonoBehaviour\n{\n    public void Load(string sceneName) => StartCoroutine(LoadRoutine(sceneName));\n    IEnumerator LoadRoutine(string sceneName)\n    {\n        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);\n        if (op == null) yield break;\n        while (!op.isDone)\n        {\n            Debug.Log($\"Loading: {op.progress:P0}\");\n            yield return null;\n        }\n    }\n}", "explain": "LoadSceneAsync returns an operation you can monitor. Add the scene to the build scene list first.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/SceneManagement.SceneManager.LoadSceneAsync.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "scene-additive", "title": "Load a scene additively", "category": "Scenes", "tags": ["scene", "additive", "streaming", "world"], "desc": "Load a second scene alongside your active one", "code": "using UnityEngine;\nusing UnityEngine.SceneManagement;\n\npublic class AdditiveScene : MonoBehaviour\n{\n    public void Add(string sceneName)\n    {\n        SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Additive);\n    }\n    public void Remove(string sceneName)\n    {\n        if (SceneManager.GetSceneByName(sceneName).isLoaded)\n            SceneManager.UnloadSceneAsync(sceneName);\n    }\n}", "explain": "Additive loading is useful for large maps, shared managers, or UI scenes. Be deliberate about scene ownership and lighting.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/SceneManagement.LoadSceneMode.Additive.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "camera-orbit", "title": "Mouse-look camera rotation", "category": "Camera", "tags": ["camera", "mouse look", "first person", "fps", "pitch", "yaw"], "desc": "Build first-person mouse look with vertical clamping", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class FPSLook : MonoBehaviour\n{\n    [SerializeField] Transform playerBody;\n    [SerializeField] float sensitivity = .08f;\n    float pitch;\n    void Update()\n    {\n        if (Mouse.current == null) return;\n        Vector2 delta = Mouse.current.delta.ReadValue()*sensitivity;\n        pitch = Mathf.Clamp(pitch-delta.y,-85f,85f);\n        transform.localRotation = Quaternion.Euler(pitch,0,0);\n        playerBody.Rotate(Vector3.up*delta.x);\n    }\n}", "explain": "Yaw turns the body; pitch only rotates the camera. Mouse delta is already a per-frame displacement, so do not multiply it by deltaTime.", "url": "https://docs.unity3d.com/Packages/com.unity.inputsystem@1.11/manual/Mouse.html", "note": "Requires Input System. Put the script on the player camera and assign the player body."},
+{"id": "camera-follow", "title": "Smooth follow camera", "category": "Camera", "tags": ["camera", "follow", "smooth damp", "third person"], "desc": "Follow a target smoothly without moving the target itself", "code": "using UnityEngine;\n\npublic class SmoothCameraFollow : MonoBehaviour\n{\n    [SerializeField] Transform target;\n    [SerializeField] Vector3 offset = new(0,3,-6);\n    [SerializeField] float smoothTime = .15f;\n    Vector3 velocity;\n    void LateUpdate()\n    {\n        if (!target) return;\n        Vector3 goal = target.position + target.TransformDirection(offset);\n        transform.position = Vector3.SmoothDamp(transform.position,goal,ref velocity,smoothTime);\n        transform.LookAt(target.position);\n    }\n}", "explain": "LateUpdate helps follow the player after movement finishes each frame; SmoothDamp avoids sudden jumps.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Vector3.SmoothDamp.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "ai-navmesh", "title": "NavMesh enemy chase", "category": "AI", "tags": ["navmesh", "enemy", "chase", "pathfinding", "agent"], "desc": "Tell an AI agent to pathfind toward a moving target", "code": "using UnityEngine;\nusing UnityEngine.AI;\n\n[RequireComponent(typeof(NavMeshAgent))]\npublic class EnemyChase : MonoBehaviour\n{\n    [SerializeField] Transform target;\n    [SerializeField] float refreshRate = .2f;\n    NavMeshAgent agent;\n    float nextRefresh;\n    void Awake() => agent = GetComponent<NavMeshAgent>();\n    void Update()\n    {\n        if (!target || Time.time < nextRefresh) return;\n        nextRefresh = Time.time + refreshRate;\n        if (agent.isOnNavMesh) agent.SetDestination(target.position);\n    }\n}", "explain": "NavMeshAgent computes paths around baked walkable surfaces. Recompute occasionally rather than unnecessarily every frame.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AI.NavMeshAgent.SetDestination.html", "note": "Bake a NavMesh using AI Navigation and assign the target."},
+{"id": "ai-line-of-sight", "title": "Enemy field-of-view detection", "category": "AI", "tags": ["field of view", "line of sight", "enemy", "vision", "raycast"], "desc": "Check distance, view angle, and obstructions before detecting a player", "code": "using UnityEngine;\n\npublic class VisionSensor : MonoBehaviour\n{\n    [SerializeField] float range = 10f, halfAngle = 45f;\n    [SerializeField] LayerMask obstacles;\n    public bool CanSee(Transform target)\n    {\n        Vector3 toTarget = target.position-transform.position;\n        if (toTarget.magnitude > range) return false;\n        if (Vector3.Angle(transform.forward,toTarget) > halfAngle) return false;\n        return !Physics.Raycast(transform.position,toTarget.normalized,toTarget.magnitude,obstacles);\n    }\n}", "explain": "Combines radius, viewing cone, and a raycast to obstacles. For accurate visibility, target the player’s head or chest instead of its pivot.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Vector3.Angle.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "ai-patrol", "title": "Waypoint patrol loop", "category": "AI", "tags": ["patrol", "waypoints", "navmesh", "ai", "enemy"], "desc": "Move between multiple NavMesh waypoint targets", "code": "using UnityEngine;\nusing UnityEngine.AI;\n\n[RequireComponent(typeof(NavMeshAgent))]\npublic class PatrolAgent : MonoBehaviour\n{\n    [SerializeField] Transform[] points;\n    NavMeshAgent agent;\n    int index;\n    void Awake() => agent = GetComponent<NavMeshAgent>();\n    void Update()\n    {\n        if (points.Length == 0 || !agent.isOnNavMesh) return;\n        if (agent.pathPending) return;\n        if (!agent.hasPath || agent.remainingDistance <= agent.stoppingDistance)\n        {\n            agent.SetDestination(points[index].position);\n            index = (index+1)%points.Length;\n        }\n    }\n}", "explain": "Cycle through assigned points. For production, check path status and agent velocity to handle unreachable waypoints.", "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AI.NavMeshAgent.html", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "network-ownership", "title": "Photon ownership-gated input", "category": "Networking", "tags": ["photon", "pun2", "ownership", "multiplayer", "local player"], "desc": "Make input and movement run only for the local player", "code": "using UnityEngine;\nusing Photon.Pun;\nusing UnityEngine.InputSystem;\n\n[RequireComponent(typeof(PhotonView))]\npublic class LocalPlayerInput : MonoBehaviourPun\n{\n    void Update()\n    {\n        if (!photonView.IsMine || Keyboard.current == null) return;\n        if (Keyboard.current.spaceKey.wasPressedThisFrame)\n            Debug.Log(\"Local player jumped\");\n    }\n}", "explain": "All clients have player objects, but only the owning client should read input and drive its own character.", "url": "https://doc.photonengine.com/pun/current/gameplay/instantiation", "note": "Requires Photon PUN 2 and Input System. Synchronize the resulting movement separately."},
+{"id": "network-room", "title": "Photon room join / create fallback", "category": "Networking", "tags": ["photon", "pun2", "room", "join", "create", "multiplayer"], "desc": "Join a random room or create one if none exists", "code": "using Photon.Pun;\nusing Photon.Realtime;\nusing UnityEngine;\n\npublic class QuickMatch : MonoBehaviourPunCallbacks\n{\n    public override void OnConnectedToMaster() => PhotonNetwork.JoinRandomRoom();\n    public override void OnJoinRandomFailed(short code,string message)\n    {\n        PhotonNetwork.CreateRoom(null,new RoomOptions { MaxPlayers = 8 });\n    }\n    public override void OnJoinedRoom()\n    {\n        Debug.Log(\"Joined \" + PhotonNetwork.CurrentRoom.Name);\n    }\n    void Start() => PhotonNetwork.ConnectUsingSettings();\n}", "explain": "Photon callbacks communicate matchmaking results. ConnectUsingSettings uses App ID and configuration in PhotonServerSettings.", "url": "https://doc.photonengine.com/pun/current/lobby-and-matchmaking/matchmaking-and-lobby", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "network-roomprops", "title": "Photon shared room properties", "category": "Networking", "tags": ["photon", "pun2", "room properties", "room state", "multiplayer"], "desc": "Store a small piece of room-wide state for late joiners", "code": "using Photon.Pun;\nusing Photon.Realtime;\nusing Hashtable = ExitGames.Client.Photon.Hashtable;\nusing UnityEngine;\n\npublic class RoomRoundState : MonoBehaviourPunCallbacks\n{\n    public void SetRound(int round)\n    {\n        if (!PhotonNetwork.InRoom || !PhotonNetwork.IsMasterClient) return;\n        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { {\"round\",round} });\n    }\n    public override void OnRoomPropertiesUpdate(Hashtable changed)\n    {\n        if (changed.TryGetValue(\"round\",out object value))\n            Debug.Log(\"Round is \" + value);\n    }\n}", "explain": "Room properties persist in the room and reach late joiners; read CurrentRoom.CustomProperties on join. Master Client authority is not cheating-proof.", "url": "https://doc.photonengine.com/pun/current/gameplay/synchronization-and-state", "note": "Attach this script to a GameObject and assign required references in the Inspector."},
+{"id": "network-instantiation", "title": "PhotonNetwork.Instantiate player prefab", "category": "Networking", "tags": ["photon", "pun2", "instantiate", "spawn", "prefab", "multiplayer"], "desc": "Spawn a networked object that exists on every joined client", "code": "using Photon.Pun;\nusing UnityEngine;\n\npublic class SpawnNetworkPlayer : MonoBehaviour\n{\n    [SerializeField] string prefabName = \"NetworkPlayer\";\n    void Start()\n    {\n        if (!PhotonNetwork.InRoom) return;\n        PhotonNetwork.Instantiate(prefabName,Vector3.zero,Quaternion.identity);\n    }\n}", "explain": "PhotonNetwork.Instantiate uses a prefab in a Resources folder (or a custom prefab pool). The prefab must include PhotonView.", "url": "https://doc.photonengine.com/pun/current/gameplay/instantiation", "note": "PUN 2 required. Only call after joining a Photon room."},
+{"id": "network-master", "title": "Photon Master Client changed event", "category": "Networking", "tags": ["photon", "pun2", "master client", "host migration", "authority"], "desc": "Respond when Photon assigns a new Master Client", "code": "using Photon.Pun;\nusing Photon.Realtime;\nusing UnityEngine;\n\npublic class MasterSwitchHandler : MonoBehaviourPunCallbacks\n{\n    public override void OnMasterClientSwitched(Player newMasterClient)\n    {\n        Debug.Log(\"New master: \" + newMasterClient.NickName);\n        if (PhotonNetwork.IsMasterClient)\n        {\n            // Resume room-owned logic if needed.\n        }\n    }\n}", "explain": "PUN rooms use a Master Client, not a dedicated server. When it changes, room-owned logic may need to resume on the new master.", "url": "https://doc.photonengine.com/pun/current/gameplay/hostmigration", "note": "Attach this script to a GameObject and assign required references in the Inspector."}
+];
+const categoryOrder=['All snippets','Input','Movement','Physics','GameObjects','Scripting','UI','Audio','Animation','Scenes','Camera','AI','Networking','Saved'];
+const byId=new Map(data.map(x=>[x.id,x]));let category='All snippets',query='',sort='relevant',activeId=null;const $=id=>document.getElementById(id);
+const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let saved=[];try{saved=JSON.parse(localStorage.getItem('unity-atlas-saved')||'[]')}catch{};saved=saved.filter(id=>byId.has(id));
+function persist(){try{localStorage.setItem('unity-atlas-saved',JSON.stringify(saved))}catch{}}
+function score(x,q){if(!q)return 1;const terms=q.toLowerCase().trim().split(/\s+/).filter(Boolean),title=x.title.toLowerCase(),tags=x.tags.join(' ').toLowerCase(),desc=x.desc.toLowerCase(),code=x.code.toLowerCase();let s=0;if(title.includes(q))s+=55;if(tags.includes(q))s+=45;if(desc.includes(q))s+=15;for(const t of terms){const found=title.includes(t)||tags.includes(t)||desc.includes(t)||code.includes(t)||x.category.toLowerCase().includes(t);if(!found)return 0;if(title.includes(t))s+=12;if(tags.includes(t))s+=10;if(desc.includes(t))s+=4;if(code.includes(t))s+=1;}return s}
+function filtered(){let entries=data.filter(x=>(category==='All snippets'||category==='Saved'&&saved.includes(x.id)||x.category===category));if(query)entries=entries.map(x=>({...x,_score:score(x,query)})).filter(x=>x._score>0);if(sort==='az')entries.sort((a,b)=>a.title.localeCompare(b.title));else if(query)entries.sort((a,b)=>b._score-a._score||a.title.localeCompare(b.title));return entries}
+function renderNav(){const counts={};data.forEach(x=>counts[x.category]=(counts[x.category]||0)+1);$('categories').innerHTML=categoryOrder.map(c=>`<button class="navitem ${category===c?'selected':''}" data-category="${safe(c)}"><span>${c==='Saved'?'☆ ':''}${safe(c)}</span><span class="navcount">${c==='All snippets'?data.length:c==='Saved'?saved.length:counts[c]||0}</span></button>`).join('');}
+function render(){renderNav();const results=filtered();$('sectionTitle').textContent=category==='All snippets'?(query?'Search results':'Explore code snippets'):category+' snippets';$('count').textContent=results.length+' result'+(results.length===1?'':'s')+(query?' for “'+query+'”':'');$('cards').innerHTML=results.length?results.map(x=>`<article class="card"><div class="cardhead"><span class="category"><span class="dot"></span>${safe(x.category)}</span><button class="star ${saved.includes(x.id)?'saved':''}" data-save="${x.id}" aria-label="${saved.includes(x.id)?'Remove saved snippet':'Save snippet'}" title="Save snippet">${saved.includes(x.id)?'★':'☆'}</button></div><h3>${safe(x.title)}</h3><p>${safe(x.desc)}</p><pre class="codepreview">${safe(x.code.split('\n').slice(0,7).join('\n'))}</pre><div class="cardbottom"><span class="tag">C# · Unity 6</span><button class="view" data-open="${x.id}">View snippet ↗</button></div></article>`).join(''):`<div class="empty"><div style="font-size:35px">⌕</div><h3>No matching snippets yet</h3><p>${category==='Saved'?'Save snippets with the star to find them here.':'Try a different search or search all the Unity docs.'}</p><button id="officialSearch">Search official Unity Docs ↗</button></div>`;
+$('allDocsSidebar').href=officialUrl(query);}
+function officialUrl(q){return q?'https://www.google.com/search?q='+encodeURIComponent('site:docs.unity3d.com OR site:docs.unity.com '+q):'https://docs.unity3d.com/';}
+function save(id){saved=saved.includes(id)?saved.filter(v=>v!==id):[...saved,id];persist();render();if(activeId===id)updateFavoriteButton()}
+function updateFavoriteButton(){$('favoriteDetail').textContent=saved.includes(activeId)?'★ Saved · Remove':'☆ Save snippet'}
+function openDetail(id){const x=byId.get(id);if(!x)return;activeId=id;$('detailCategory').textContent=x.category+' · Unity C#';$('detailTitle').textContent=x.title;$('detailDescription').textContent=x.desc;$('detailCode').textContent=x.code;$('detailExplanation').textContent=x.explain;$('detailNote').textContent=x.note||'This is an original teaching example, not a verbatim extract from Unity’s documentation.';$('docsLink').href=x.url;$('copy').textContent='Copy code';updateFavoriteButton();$('detail').showModal()}
+$('categories').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;category=b.dataset.category;render()});$('cards').addEventListener('click',e=>{const b=e.target.closest('[data-open],[data-save],#officialSearch');if(!b)return;if(b.id==='officialSearch')window.open(officialUrl(query),'_blank','noopener');else if(b.dataset.save)save(b.dataset.save);else openDetail(b.dataset.open)});$('search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();render()});$('sort').addEventListener('change',e=>{sort=e.target.value;render()});document.querySelectorAll('.suggestion').forEach(b=>b.addEventListener('click',()=>{$('search').value=b.dataset.query;query=b.dataset.query;category='All snippets';render();$('search').focus()}));$('close').onclick=()=>$('detail').close();$('detail').addEventListener('click',e=>{if(e.target===$('detail'))$('detail').close()});$('copy').addEventListener('click',async()=>{const code=byId.get(activeId)?.code||'';try{await navigator.clipboard.writeText(code)}catch{const t=document.createElement('textarea');t.value=code;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}$('copy').textContent='✓ Copied';setTimeout(()=>{$('copy').textContent='Copy code'},1700)});$('favoriteDetail').onclick=()=>save(activeId);document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('detail').close();$('search').focus();$('search').select()}if(e.key==='/'&&document.activeElement.tagName!=='INPUT'&&!$('detail').open){e.preventDefault();$('search').focus()}});render();
+</script></body></html>
